@@ -13,14 +13,8 @@ class ConvertTimestampProperty implements ConvertPropertyInterface
 {
     use PropertyAccessorTrait;
 
-    public ?string $property = null;
-
-    public static function new(string $property): self
+    public function __construct(public string $property)
     {
-        $object = new self();
-        $object->property = $property;
-
-        return $object;
     }
 
     public function convert(array $arr): array

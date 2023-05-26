@@ -13,16 +13,8 @@ class ConvertProperty implements ConvertPropertyInterface
 {
     use PropertyAccessorTrait;
 
-    public ?string $property = null;
-    public ?string $apiProperty = null;
-
-    public static function new(string $property, string $apiProperty): self
+    public function __construct(public string $property, public string $apiProperty)
     {
-        $object = new self();
-        $object->property = $property;
-        $object->apiProperty = $apiProperty;
-
-        return $object;
     }
 
     public function convert(array $arr): array

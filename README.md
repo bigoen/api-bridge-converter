@@ -53,32 +53,32 @@ $tags = $this->entityManager
     ->findAllIndexById();
 // set converts.
 $convertProperties = [
-    ConvertTreeProperty::new(
+    new ConvertTreeProperty(
         '[category]',
         false,
         '[category][@id]',
         null,
         $this->getConvertValues('/api/categories/{id}', $categories)
     ),
-    ConvertTreeProperty::new(
+    new ConvertTreeProperty(
         '[tags]',
         true,
         '[tags][][@id]',
         Tag::class,
         $this->getConvertValues('/api/tags/{id}', $tags),
         [
-            ConvertDateTimeProperty::new('[createdAt]'),
-            ConvertDateTimeProperty::new('[updatedAt]'),
+            new ConvertDateTimeProperty('[createdAt]'),
+            new ConvertDateTimeProperty('[updatedAt]'),
         ]
     ),
-    ConvertDateTimeProperty::new('[createdAt]'),
-    ConvertDateTimeProperty::new('[updatedAt]'),
+    new ConvertDateTimeProperty('[createdAt]'),
+    new ConvertDateTimeProperty('[updatedAt]'),
     // class property and api property.
-    ConvertProperty::new('[id]', '[_id]'),
+    new ConvertProperty('[id]', '[_id]'),
 ];
 // unsets for sending.
 $sendingConvertProperties = [
-    ConvertUnsetsProperty::new(['id', 'name']),
+    new ConvertUnsetsProperty(['id', 'name']),
 ];
 /* @var $client JsonldClient */
 $client->setConvertProperties($convertProperties)->setSendingConvertProperties($sendingConvertProperties);

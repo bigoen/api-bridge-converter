@@ -9,14 +9,8 @@ namespace Bigoen\ApiBridgeConverter\Model;
  */
 class ConvertUnsetsProperty implements ConvertPropertyInterface
 {
-    public array $properties = [];
-
-    public static function new(array $properties = []): self
+    public function __construct(public array $properties = [])
     {
-        $object = new self();
-        $object->properties = $properties;
-
-        return $object;
     }
 
     public function convert(array $arr): array

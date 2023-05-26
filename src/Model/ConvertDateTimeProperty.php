@@ -13,16 +13,8 @@ class ConvertDateTimeProperty implements ConvertPropertyInterface
 {
     use PropertyAccessorTrait;
 
-    public ?string $property = null;
-    public ?string $format = null;
-
-    public static function new(string $property, string $format = \DateTimeInterface::ISO8601): self
+    public function __construct(public string $property, public string $format = \DateTimeInterface::ISO8601)
     {
-        $object = new self();
-        $object->property = $property;
-        $object->format = $format;
-
-        return $object;
     }
 
     public function convert(array $arr): array
