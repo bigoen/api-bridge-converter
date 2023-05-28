@@ -83,4 +83,44 @@ $sendingConvertProperties = [
 /* @var $client JsonldClient */
 $client->setConvertProperties($convertProperties)->setSendingConvertProperties($sendingConvertProperties);
 ```
+Use in custom object.
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace Bigoen\Test\Model\Input;
+
+use Bigoen\ApiBridgeConverter\Model\ConvertUnsetNullsProperty;
+use Bigoen\ApiBridgeConverter\Model\Traits\ArrayObjectConverterTrait;
+use Bigoen\Test\Contracts\InputInterface;
+
+/**
+ * @author Şafak Saylam <safak@bigoen.com>
+ */
+final class PaymentCardInput implements InputInterface
+{
+    use ArrayObjectConverterTrait;
+
+    public function __construct(
+        public string $cardHolderName,
+        public string $cardNumber,
+        public string $expireYear,
+        public string $expireMonth,
+        public string $cvc,
+        public ?string $cardAlias = null,
+        public ?bool $storeCardAfterSuccessPayment = null,
+        public ?string $cardUserKey = null
+    ) {
+    }
+
+    public function toArray(): array
+    {
+        return self::objectToArray($this, [
+            new ConvertUnsetNullsProperty(),
+        ]);
+    }
+}
+
+```
 Important: property and deep names details > https://symfony.com/doc/current/components/property_access.html
