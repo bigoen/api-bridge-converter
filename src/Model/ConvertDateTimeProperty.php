@@ -13,7 +13,7 @@ class ConvertDateTimeProperty implements ConvertPropertyInterface
 {
     use PropertyAccessorTrait;
 
-    public function __construct(public string $property, public string $format = \DateTimeInterface::ISO8601, public ?string $timezone = null)
+    public function __construct(public string $property, public string $format = \DateTimeInterface::ISO8601, public ?\DateTimeZone $timezone = null)
     {
     }
 
