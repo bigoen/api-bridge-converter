@@ -33,7 +33,7 @@ class ConvertTreeProperty implements ConvertPropertyInterface
         $convertValues = $this->items;
         $subConvertProperties = $this->convertProperties;
         $haveSubConvertProperties = \count($subConvertProperties) > 0;
-        if (false !== strpos($deep, '[]') && $accessor->isWritable($arr, $property)) {
+        if ($deep && false !== strpos($deep, '[]') && $accessor->isWritable($arr, $property)) {
             $items = [];
             $subArr = $accessor->getValue($arr, $property) ?? [];
             foreach ($subArr as $key => $item) {
@@ -59,7 +59,7 @@ class ConvertTreeProperty implements ConvertPropertyInterface
             }
             $accessor->setValue($arr, $property, $items);
         } else {
-            if ($accessor->isReadable($arr, $deep) && $accessor->isWritable($arr, $property)) {
+            if ($deep && $accessor->isReadable($arr, $deep) && $accessor->isWritable($arr, $property)) {
                 $accessValue = $accessor->getValue($arr, $deep);
                 $onlyConvertAccessValue = $accessor->getValue($arr, $property);
                 if (null !== $accessValue && isset($convertValues[$accessValue])) {
