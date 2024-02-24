@@ -16,7 +16,7 @@ trait ArrayObjectConverterTrait
     use PropertyAccessorTrait;
     use PropertyInfoTrait;
 
-    public static function arrayToObject(object $model, array $arr, array $convertProperties = []): object
+    public static function arrayToObject(mixed $model, array $arr, array $convertProperties = []): mixed
     {
         $accessor = self::getPropertyAccessor();
         $arr = self::convertProperties($convertProperties, $arr);
