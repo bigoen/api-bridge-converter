@@ -39,8 +39,11 @@ trait ArrayObjectConverterTrait
         return $model;
     }
 
-    public static function objectToArray(object $model, array $convertProperties = []): array
+    public static function objectToArray(?object $model, array $convertProperties = []): array
     {
+        if (null === $model) {
+            return [];
+        }
         $propertyInfo = self::getPropertyInfo();
         $accessor = self::getPropertyAccessor();
         $arr = [];

@@ -13,20 +13,22 @@ class ConvertProperty implements ConvertPropertyInterface
 {
     use PropertyAccessorTrait;
 
-    public function __construct(public string $property, public string $apiProperty)
+    public function __construct(public string $property, public string|array $apiProperty)
     {
     }
 
     public function convert(array $arr): array
     {
         $accessor = self::getPropertyAccessor();
-        $apiProperty = $this->apiProperty;
-        if ($accessor->isReadable($arr, $apiProperty)) {
-            $value = $accessor->getValue($arr, $apiProperty);
-            $accessor->setValue($arr, $this->property, $value);
-        } elseif (isset($arr[$apiProperty])) {
-            $arr[$this->property] = $arr[$apiProperty];
-            unset($arr[$apiProperty]);
+        $apiProperties = \is_array($this->apiProperty) ? $this->apiProperty : [$this->apiProperty];
+        foreach ($apiProperties as $apiProperty) {
+            if ($accessor->isReadable($arr, $apiProperty)) {
+                $value = $accessor->getValue($arr, $apiProperty);
+                $accessor->setValue($arr, $this->property, $value);
+            } elseif (isset($arr[$apiProperty])) {
+                $arr[$this->property] = $arr[$apiProperty];
+                unset($arr[$apiProperty]);
+            }
         }
 
         return $arr;
