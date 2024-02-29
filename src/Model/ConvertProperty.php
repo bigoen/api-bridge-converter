@@ -22,8 +22,7 @@ class ConvertProperty implements ConvertPropertyInterface
         $accessor = self::getPropertyAccessor();
         $apiProperties = \is_array($this->apiProperty) ? $this->apiProperty : [$this->apiProperty];
         foreach ($apiProperties as $apiProperty) {
-            if ($accessor->isReadable($arr, $apiProperty)) {
-                $value = $accessor->getValue($arr, $apiProperty);
+            if ($value = $accessor->getValue($arr, $apiProperty)) {
                 $accessor->setValue($arr, $this->property, $value);
             } elseif (isset($arr[$apiProperty])) {
                 $arr[$this->property] = $arr[$apiProperty];
